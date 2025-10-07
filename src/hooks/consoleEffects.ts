@@ -44,6 +44,54 @@ export const useInputFocus = (
 };
 
 /**
+ * Creates an effect that automatically focuses input whenever user clicks anywhere
+ * @param inputRef - Reference to the input element
+ * @param isGamesMode - Whether games mode is active
+ * @param isPlayingGame - Whether a game is currently playing
+ */
+export const useAutoFocus = (
+  inputRef: React.RefObject<HTMLInputElement | null>,
+  isGamesMode: boolean,
+  isPlayingGame: boolean
+) => {
+  useEffect(() => {
+    const handleFocus = () => {
+      // Only auto-focus if not in games mode or playing a game
+      if (!isGamesMode && !isPlayingGame && inputRef.current) {
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 0);
+      }
+    };
+
+    // Focus on click anywhere in the document
+    const handleClick = (e: MouseEvent) => {
+      // Don't interfere with text selection in output
+      const target = e.target as HTMLElement;
+      if (target.tagName !== 'A' && target.tagName !== 'CANVAS') {
+        handleFocus();
+      }
+    };
+
+    // Re-focus when window regains focus
+    const handleWindowFocus = () => {
+      handleFocus();
+    };
+
+    document.addEventListener('click', handleClick);
+    window.addEventListener('focus', handleWindowFocus);
+
+    // Initial focus
+    handleFocus();
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+      window.removeEventListener('focus', handleWindowFocus);
+    };
+  }, [inputRef, isGamesMode, isPlayingGame]);
+};
+
+/**
  * Creates an effect that starts the typing sequence
  * @param setCurrentStep - Function to set current step
  */

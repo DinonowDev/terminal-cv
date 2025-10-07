@@ -74,10 +74,50 @@ export class ThemeSystem {
    * Creates a new ThemeSystem instance and applies the default theme
    */
   constructor() {
-    this.currentTheme = themes[1]; // Default to dark theme
     // Only apply theme if we're in the browser
-    if (typeof document !== 'undefined') {
+    if (typeof window !== 'undefined') {
+      // Try to load saved theme from localStorage
+      const savedThemeId = localStorage.getItem('portfolio-theme');
+      if (savedThemeId) {
+        const savedTheme = themes.find(t => t.id === savedThemeId);
+        if (savedTheme) {
+          this.currentTheme = savedTheme;
+        } else {
+          this.currentTheme = themes[1]; // Default to dark theme
+        }
+      } else {
+        this.currentTheme = themes[1]; // Default to dark theme
+      }
+      
+      // Load custom colors from localStorage
+      const savedTextColor = localStorage.getItem('portfolio-color-text');
+      const savedBgColor = localStorage.getItem('portfolio-color-bg');
+      const savedPromptColor = localStorage.getItem('portfolio-color-prompt');
+      
+      if (savedTextColor) this.customColors.set('text', savedTextColor);
+      if (savedBgColor) this.customColors.set('bg', savedBgColor);
+      if (savedPromptColor) this.customColors.set('prompt', savedPromptColor);
+      
+      // Apply the theme
       this.applyTheme(this.currentTheme);
+      
+      // Apply custom colors if any
+      if (savedTextColor) this.applyColor('text', savedTextColor);
+      if (savedBgColor) this.applyColor('bg', savedBgColor);
+      if (savedPromptColor) this.applyColor('prompt', savedPromptColor);
+      
+      // Load font size and opacity
+      const savedFontSize = localStorage.getItem('portfolio-font-size');
+      const savedOpacity = localStorage.getItem('portfolio-opacity');
+      
+      if (savedFontSize) {
+        document.documentElement.style.setProperty('--font-size', `${savedFontSize}px`);
+      }
+      if (savedOpacity) {
+        document.documentElement.style.setProperty('--opacity', savedOpacity);
+      }
+    } else {
+      this.currentTheme = themes[1]; // Default to dark theme
     }
   }
 
@@ -122,8 +162,10 @@ export class ThemeSystem {
     const theme = themes.find(t => t.id === themeId);
     if (theme) {
       this.currentTheme = theme;
-      if (typeof document !== 'undefined') {
+      if (typeof window !== 'undefined') {
         this.applyTheme(theme);
+        // Save to localStorage
+        localStorage.setItem('portfolio-theme', themeId);
       }
       return true;
     }
@@ -140,8 +182,10 @@ export class ThemeSystem {
     const color = colors.find(c => c.name === colorName);
     if (color) {
       this.customColors.set(type, color.value);
-      if (typeof document !== 'undefined') {
+      if (typeof window !== 'undefined') {
         this.applyColor(type, color.value);
+        // Save to localStorage
+        localStorage.setItem(`portfolio-color-${type}`, color.value);
       }
       return true;
     }
@@ -155,8 +199,10 @@ export class ThemeSystem {
    */
   public setFontSize(size: number): boolean {
     if (size >= 12 && size <= 24) {
-      if (typeof document !== 'undefined') {
+      if (typeof window !== 'undefined') {
         document.documentElement.style.setProperty('--font-size', `${size}px`);
+        // Save to localStorage
+        localStorage.setItem('portfolio-font-size', size.toString());
       }
       return true;
     }
@@ -170,8 +216,10 @@ export class ThemeSystem {
    */
   public setOpacity(opacity: number): boolean {
     if (opacity >= 0.1 && opacity <= 1.0) {
-      if (typeof document !== 'undefined') {
+      if (typeof window !== 'undefined') {
         document.documentElement.style.setProperty('--opacity', opacity.toString());
+        // Save to localStorage
+        localStorage.setItem('portfolio-opacity', opacity.toString());
       }
       return true;
     }
@@ -187,13 +235,21 @@ export class ThemeSystem {
    * Removes all custom properties and applies default theme
    */
   public reset(): void {
-    if (typeof document !== 'undefined') {
+    if (typeof window !== 'undefined') {
       // Remove all custom properties
       document.documentElement.style.removeProperty('--terminal-bg');
       document.documentElement.style.removeProperty('--foreground');
       document.documentElement.style.removeProperty('--prompt-color');
       document.documentElement.style.removeProperty('--font-size');
       document.documentElement.style.removeProperty('--opacity');
+      
+      // Clear localStorage
+      localStorage.removeItem('portfolio-theme');
+      localStorage.removeItem('portfolio-color-text');
+      localStorage.removeItem('portfolio-color-bg');
+      localStorage.removeItem('portfolio-color-prompt');
+      localStorage.removeItem('portfolio-font-size');
+      localStorage.removeItem('portfolio-opacity');
     }
     
     // Reset to default theme

@@ -162,21 +162,30 @@ export default function SnakeGame({ onExit }: SnakeGameProps) {
     };
   }, [onExit]);
 
+  // Get theme colors from CSS variables
+  const themeColor = typeof document !== 'undefined' 
+    ? getComputedStyle(document.documentElement).getPropertyValue('--foreground').trim() || '#ffffff'
+    : '#ffffff';
+  
+  const themeBg = typeof document !== 'undefined'
+    ? getComputedStyle(document.documentElement).getPropertyValue('--terminal-bg').trim() || '#000000'
+    : '#000000';
+
   return (
     <div className="snake-game">
-      <div className="game-header">
+      <div className="game-header" style={{ color: themeColor }}>
         <p>🐍 Snake Game</p>
       </div>
-      <div className="game-score">
+      <div className="game-score" style={{ color: themeColor }}>
         Score: {score}
       </div>
       <canvas
         ref={canvasRef}
         width="400"
         height="400"
-        style={{ border: '1px solid white', background: 'black' }}
+        style={{ border: `2px solid ${themeColor}`, background: themeBg }}
       />
-      <div className="game-controls">
+      <div className="game-controls" style={{ color: themeColor }}>
         <p>Controls: ↑↓←→ to move, R to restart, Q or Ctrl+C to quit</p>
       </div>
     </div>

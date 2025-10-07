@@ -36,16 +36,21 @@ export const executeCommand = (
   handleFontSizeChange: (size: string) => void,
   handleOpacityChange: (opacity: string) => void,
   handleReset: () => void,
-  handleOpenFile: (fileName: string) => void
+  handleOpenFile: (fileName: string) => void,
+  clearHistory: () => void
 ) => {
   const cmd = commandSystem.getCommand(command.toLowerCase());
   
   if (cmd) {
     if (command.toLowerCase() === 'games') {
+      // First execute the command to add game list to history
+      cmd.action(addToHistory);
+      // Then set games mode and update display
       setIsGamesMode(true);
-      updateGamesDisplay();
+      // Wait for state update then show interactive menu
+      setTimeout(() => updateGamesDisplay(), 50);
     } else if (command.toLowerCase() === 'clear') {
-      // Clear will be handled by the component
+      clearHistory();
     } else {
       cmd.action(addToHistory);
     }

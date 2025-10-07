@@ -171,6 +171,9 @@ export default function ConsoleRender({
               className="console-input"
               placeholder=""
               disabled={isTyping}
+              autoFocus
+              autoComplete="off"
+              spellCheck="false"
             />
           </div>
         )}

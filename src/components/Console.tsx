@@ -59,6 +59,7 @@ import {
 import {
   useScrollToBottom,
   useInputFocus,
+  useAutoFocus,
   useTypingSequence,
   useGlobalKeyboardEvents
 } from '../hooks/consoleEffects';
@@ -190,7 +191,8 @@ export default function Console({ commands }: ConsoleProps) {
           (size) => handleFontSizeChange(size, themeSystem, addToHistory),
           (opacity) => handleOpacityChange(opacity, themeSystem, addToHistory),
           () => handleReset(themeSystem, addToHistory),
-          handleOpenFile
+          handleOpenFile,
+          () => setHistory([])
         );
         
         // Add command to history
@@ -237,6 +239,7 @@ export default function Console({ commands }: ConsoleProps) {
   // ============================================================================
   useScrollToBottom(consoleRef, history);
   useInputFocus(inputRef, isTyping);
+  useAutoFocus(inputRef, isGamesMode, isPlayingGame);
   useTypingSequence(setCurrentStep);
   useGlobalKeyboardEvents(
     isGamesMode,

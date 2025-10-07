@@ -191,7 +191,12 @@ export const themes: Theme[] = [
   {
     id: 'orange',
     name: 'Orange',
-    colors: { bg: '#221100', text: '#ff8800', prompt: '#ff8800' }
+    colors: { bg: '#1a0f00', text: '#ffaa33', prompt: '#ffaa33' }
+  },
+  {
+    id: 'cyan',
+    name: 'Cyan',
+    colors: { bg: '#001a1a', text: '#00ffff', prompt: '#00ffff' }
   }
 ];
 

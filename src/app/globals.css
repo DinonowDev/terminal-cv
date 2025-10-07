@@ -24,6 +24,11 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  cursor: text;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 /* Console Styles */
@@ -35,6 +40,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 0;
+  cursor: text;
 }
 
 .console-header {
@@ -69,6 +75,15 @@ body {
   background: #27ca3f;
 }
 
+.console-button {
+  cursor: pointer;
+}
+
+/* Links and interactive elements should have pointer cursor */
+a, button, canvas {
+  cursor: pointer !important;
+}
+
 .console-title {
   color: #ffffff;
   font-size: 14px;
@@ -86,6 +101,7 @@ body {
   font-size: var(--font-size);
   line-height: 1.6;
   opacity: var(--opacity);
+  cursor: text;
 }
 
 .welcome-message {
@@ -128,16 +144,21 @@ body {
 }
 
 .output {
-  color: var(--foreground);
+  color: var(--foreground) !important;
   white-space: pre-wrap;
   margin-left: 20px;
   margin-bottom: 10px;
+  font-family: 'Courier New', monospace;
+  line-height: 1.6;
+}
+
+.output * {
+  color: inherit !important;
 }
 
 .input-line {
   display: flex;
   align-items: center;
-  margin-top: 20px;
 }
 
 .console-input {
@@ -153,6 +174,14 @@ body {
   -webkit-user-select: text;
   -moz-user-select: text;
   -ms-user-select: text;
+}
+
+/* Allow text selection only in input and links */
+.console-input, a {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
 }
 
 .console-input::placeholder {
@@ -190,26 +219,38 @@ body {
 
 /* Games section special styling */
 .games-section {
-  color: #ff6b6b !important;
+  color: var(--foreground) !important;
   font-weight: bold;
 }
 
 .games-section .emoji {
-  color: #ffd93d !important;
   font-size: 1.2em;
+  filter: grayscale(0%) !important;
+  opacity: 1 !important;
 }
 
 .games-section .game-title {
-  color: #4ecdc4 !important;
+  color: var(--foreground) !important;
   font-weight: bold;
 }
 
 .games-section .game-controls {
-  color: #45b7d1 !important;
+  color: var(--foreground) !important;
 }
 
 .games-section .game-features {
-  color: #96ceb4 !important;
+  color: var(--foreground) !important;
+}
+
+/* Ensure all emojis are visible in all themes */
+.output > div {
+  color: var(--foreground) !important;
+}
+
+/* Fix for emoji rendering across all themes */
+.history-item {
+  filter: none !important;
+  opacity: 1 !important;
 }
 
 /* Snake Game Styling */
@@ -220,23 +261,23 @@ body {
 }
 
 .snake-game .game-header {
-  color: #00ff00;
+  color: var(--foreground);
   font-weight: bold;
   margin-bottom: 10px;
 }
 
 .snake-game .game-score {
-  color: #ffff00;
+  color: var(--foreground);
   font-weight: bold;
   margin-bottom: 10px;
   text-align: center;
 }
 
 .snake-game .game-canvas {
-  background: #000000;
-  border: 2px solid #00ff00;
+  background: var(--terminal-bg);
+  border: 2px solid var(--foreground);
   padding: 10px;
-  color: #00ff00;
+  color: var(--foreground);
   font-size: 12px;
   line-height: 1.2;
   margin: 10px 0;
@@ -245,20 +286,20 @@ body {
 }
 
 .snake-game .game-over {
-  color: #ff00ff;
+  color: var(--foreground);
   font-weight: bold;
   text-align: center;
   margin-top: 10px;
 }
 
 .snake-game .game-controls {
-  color: #00ffff;
+  color: var(--foreground);
   font-size: 12px;
   margin-top: 10px;
 }
 
 .snake-game .game-start {
-  color: #ffff00;
+  color: var(--foreground);
   font-size: 14px;
   font-weight: bold;
   text-align: center;

@@ -2,6 +2,10 @@
 
 A modern, interactive terminal-style portfolio built with Next.js 14, TypeScript, and React. Experience a unique command-line interface that showcases professional experience, projects, and skills through an immersive terminal environment.
 
+## 🎯 [Live Demo](https://dinonow.vercel.app/)
+
+**Experience the portfolio in action!** Visit the live demo to see all features in action.
+
 ## ✨ Features
 
 - **🖥️ Interactive Terminal Interface** - Full command-line experience with typing effects
@@ -259,9 +263,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
-<!-- - **Portfolio**: [https://your-portfolio.com](https://your-portfolio.com) -->
-- **LinkedIn**: [https://linkedin.com/in/amirhossein-rezaei](https://www.linkedin.com/in/dinonow/)
-- **GitHub**: [https://github.com/amirhossein-rezaei](https://github.com/dinonowdev)
+- **Live Demo**: [https://dinonow.vercel.app/](https://dinonow.vercel.app/)
+- **LinkedIn**: [https://linkedin.com/in/dinonow](https://www.linkedin.com/in/dinonow/)
+- **GitHub**: [https://github.com/dinonowdev](https://github.com/dinonowdev)
 
 ---
 
