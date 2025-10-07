@@ -97,7 +97,9 @@ export default function SnakeGame({ onExit }: SnakeGameProps) {
 
       // Draw snake one cell at a time
       // Get theme color from CSS variables
-      const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--foreground') || '#ffffff';
+      const themeColor = typeof document !== 'undefined' 
+        ? getComputedStyle(document.documentElement).getPropertyValue('--foreground') || '#ffffff'
+        : '#ffffff';
       context.fillStyle = themeColor;
       snake.cells.forEach((cell, index) => {
         // Drawing 1 px smaller than the grid creates a grid effect in the snake body

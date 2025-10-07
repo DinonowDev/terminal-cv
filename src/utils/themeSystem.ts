@@ -75,7 +75,10 @@ export class ThemeSystem {
    */
   constructor() {
     this.currentTheme = themes[1]; // Default to dark theme
-    this.applyTheme(this.currentTheme);
+    // Only apply theme if we're in the browser
+    if (typeof document !== 'undefined') {
+      this.applyTheme(this.currentTheme);
+    }
   }
 
   // ============================================================================
@@ -119,7 +122,9 @@ export class ThemeSystem {
     const theme = themes.find(t => t.id === themeId);
     if (theme) {
       this.currentTheme = theme;
-      this.applyTheme(theme);
+      if (typeof document !== 'undefined') {
+        this.applyTheme(theme);
+      }
       return true;
     }
     return false;
@@ -135,7 +140,9 @@ export class ThemeSystem {
     const color = colors.find(c => c.name === colorName);
     if (color) {
       this.customColors.set(type, color.value);
-      this.applyColor(type, color.value);
+      if (typeof document !== 'undefined') {
+        this.applyColor(type, color.value);
+      }
       return true;
     }
     return false;
@@ -148,7 +155,9 @@ export class ThemeSystem {
    */
   public setFontSize(size: number): boolean {
     if (size >= 12 && size <= 24) {
-      document.documentElement.style.setProperty('--font-size', `${size}px`);
+      if (typeof document !== 'undefined') {
+        document.documentElement.style.setProperty('--font-size', `${size}px`);
+      }
       return true;
     }
     return false;
@@ -161,7 +170,9 @@ export class ThemeSystem {
    */
   public setOpacity(opacity: number): boolean {
     if (opacity >= 0.1 && opacity <= 1.0) {
-      document.documentElement.style.setProperty('--opacity', opacity.toString());
+      if (typeof document !== 'undefined') {
+        document.documentElement.style.setProperty('--opacity', opacity.toString());
+      }
       return true;
     }
     return false;
@@ -176,17 +187,21 @@ export class ThemeSystem {
    * Removes all custom properties and applies default theme
    */
   public reset(): void {
-    // Remove all custom properties
-    document.documentElement.style.removeProperty('--terminal-bg');
-    document.documentElement.style.removeProperty('--foreground');
-    document.documentElement.style.removeProperty('--prompt-color');
-    document.documentElement.style.removeProperty('--font-size');
-    document.documentElement.style.removeProperty('--opacity');
+    if (typeof document !== 'undefined') {
+      // Remove all custom properties
+      document.documentElement.style.removeProperty('--terminal-bg');
+      document.documentElement.style.removeProperty('--foreground');
+      document.documentElement.style.removeProperty('--prompt-color');
+      document.documentElement.style.removeProperty('--font-size');
+      document.documentElement.style.removeProperty('--opacity');
+    }
     
     // Reset to default theme
     this.currentTheme = themes[1]; // Dark theme
     this.customColors.clear();
-    this.applyTheme(this.currentTheme);
+    if (typeof document !== 'undefined') {
+      this.applyTheme(this.currentTheme);
+    }
   }
 
   /**
@@ -296,9 +311,11 @@ Type any setting command to apply changes!
    * @param theme - The theme configuration to apply
    */
   private applyTheme(theme: ThemeConfig): void {
-    document.documentElement.style.setProperty('--terminal-bg', theme.colors.bg);
-    document.documentElement.style.setProperty('--foreground', theme.colors.text);
-    document.documentElement.style.setProperty('--prompt-color', theme.colors.prompt);
+    if (typeof document !== 'undefined') {
+      document.documentElement.style.setProperty('--terminal-bg', theme.colors.bg);
+      document.documentElement.style.setProperty('--foreground', theme.colors.text);
+      document.documentElement.style.setProperty('--prompt-color', theme.colors.prompt);
+    }
   }
 
   /**
@@ -307,12 +324,14 @@ Type any setting command to apply changes!
    * @param colorValue - The color value to apply
    */
   private applyColor(type: string, colorValue: string): void {
-    if (type === 'text') {
-      document.documentElement.style.setProperty('--foreground', colorValue);
-    } else if (type === 'bg') {
-      document.documentElement.style.setProperty('--terminal-bg', colorValue);
-    } else if (type === 'prompt') {
-      document.documentElement.style.setProperty('--prompt-color', colorValue);
+    if (typeof document !== 'undefined') {
+      if (type === 'text') {
+        document.documentElement.style.setProperty('--foreground', colorValue);
+      } else if (type === 'bg') {
+        document.documentElement.style.setProperty('--terminal-bg', colorValue);
+      } else if (type === 'prompt') {
+        document.documentElement.style.setProperty('--prompt-color', colorValue);
+      }
     }
   }
 }

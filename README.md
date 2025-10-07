@@ -259,9 +259,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
-- **Portfolio**: [https://your-portfolio.com](https://your-portfolio.com)
-- **LinkedIn**: [https://linkedin.com/in/amirhossein-rezaei](https://linkedin.com/in/amirhossein-rezaei)
-- **GitHub**: [https://github.com/amirhossein-rezaei](https://github.com/amirhossein-rezaei)
+<!-- - **Portfolio**: [https://your-portfolio.com](https://your-portfolio.com) -->
+- **LinkedIn**: [https://linkedin.com/in/amirhossein-rezaei](https://www.linkedin.com/in/dinonow/)
+- **GitHub**: [https://github.com/amirhossein-rezaei](https://github.com/dinonowdev)
 
 ---
 
