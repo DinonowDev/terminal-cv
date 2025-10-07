@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ffffff;
+  --terminal-bg: #000000;
+  --terminal-border: #333333;
+  --prompt-color: #00ff00;
+  --font-size: 14px;
+  --opacity: 1;
 }
 
 @theme inline {
@@ -12,15 +17,267 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-mono), 'Courier New', monospace;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Console Styles */
+.console-container {
+  width: 100vw;
+  height: 100vh;
+  background: var(--terminal-bg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.console-header {
+  background: #1a1a1a;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--terminal-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.console-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.console-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.console-button.close {
+  background: #ff5f56;
+}
+
+.console-button.minimize {
+  background: #ffbd2e;
+}
+
+.console-button.maximize {
+  background: #27ca3f;
+}
+
+.console-title {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.console-body {
+  flex: 1;
+  padding: 20px;
+  padding-bottom: 20vh; /* 20% of viewport height for bottom spacing */
+  overflow-y: auto;
+  background: var(--terminal-bg);
+  color: var(--foreground);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size);
+  line-height: 1.6;
+  opacity: var(--opacity);
+}
+
+.welcome-message {
+  color: var(--foreground);
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.intro-section {
+  color: var(--foreground);
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.help-section {
+  color: var(--foreground);
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.history-item {
+  margin-bottom: 10px;
+}
+
+.command-line {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.prompt {
+  color: var(--prompt-color);
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.command {
+  color: var(--foreground);
+}
+
+.output {
+  color: var(--foreground);
+  white-space: pre-wrap;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.input-line {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.console-input {
+  background: transparent;
+  border: none;
+  color: var(--foreground);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size);
+  outline: none;
+  flex: 1;
+  margin-left: 8px;
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+}
+
+.console-input::placeholder {
+  color: var(--foreground);
+  opacity: 0.5;
+}
+
+/* Custom scrollbar for terminal */
+.console-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.console-body::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.console-body::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 4px;
+}
+
+.console-body::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}
+
+/* Cursor animation */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.animate-pulse {
+  animation: blink 1s infinite;
+}
+
+/* Games section special styling */
+.games-section {
+  color: #ff6b6b !important;
+  font-weight: bold;
+}
+
+.games-section .emoji {
+  color: #ffd93d !important;
+  font-size: 1.2em;
+}
+
+.games-section .game-title {
+  color: #4ecdc4 !important;
+  font-weight: bold;
+}
+
+.games-section .game-controls {
+  color: #45b7d1 !important;
+}
+
+.games-section .game-features {
+  color: #96ceb4 !important;
+}
+
+/* Snake Game Styling */
+.snake-game {
+  color: var(--foreground);
+  font-family: 'Courier New', monospace;
+  padding: 10px 0;
+}
+
+.snake-game .game-header {
+  color: #00ff00;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.snake-game .game-score {
+  color: #ffff00;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.snake-game .game-canvas {
+  background: #000000;
+  border: 2px solid #00ff00;
+  padding: 10px;
+  color: #00ff00;
+  font-size: 12px;
+  line-height: 1.2;
+  margin: 10px 0;
+  white-space: pre;
+  font-family: 'Courier New', monospace;
+}
+
+.snake-game .game-over {
+  color: #ff00ff;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.snake-game .game-controls {
+  color: #00ffff;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.snake-game .game-start {
+  color: #ffff00;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .console-body {
+    padding: 15px;
+    font-size: 12px;
+  }
+  
+  .welcome-message {
+    font-size: 16px;
+  }
+  
+  .intro-section {
+    font-size: 14px;
+  }
 }
