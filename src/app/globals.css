@@ -25,10 +25,6 @@ body {
   padding: 0;
   overflow-x: hidden;
   cursor: text;
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
 }
 
 /* Console Styles */
@@ -176,12 +172,12 @@ a, button, canvas {
   -ms-user-select: text;
 }
 
-/* Allow text selection only in input and links */
-.console-input, a {
-  user-select: text !important;
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
+/* Allow text selection everywhere */
+* {
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
 }
 
 .console-input::placeholder {
